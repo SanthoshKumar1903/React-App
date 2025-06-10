@@ -13,5 +13,3 @@ This project includes a full CI/CD pipeline with GitHub Actions:
   - Simulates a production server using `pm2` + `serve`
   - Deploys the build to GitHub Pages
   - All processes are managed and terminated using `pm2`
-
-> This demonstrates process management knowledge using `pm2`, even though GitHub Pages hosts static files. In real production (e.g., DigitalOcean, EC2), the same `pm2` commands can be reused for server lifecycle management.
