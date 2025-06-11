@@ -2,38 +2,36 @@ name: Deploy React App
 
 on:
   push:
-    branches: [main]
+    branches: [test]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
-      - name: Install pnpm 
-        run: npm install -g pnpm
-
-      - name: Install dependencies using pnpm
-        run: pnpm install
+      - name: Install dependencies
+        run: npm install
 
       - name: Build project
-        run: pnpm run build
+        run: npm run build
 
       - name: Serve with PM2
         run: |
-          pnpm install -g serve pm2
-          pm2 start serve --name react-app -- -s dist
+          npm install -g serve pm2
+          pm2 start serve --name React-App -- -s dist -l 5000
           pm2 list
+          pm2 stop React-App
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy
-        env:
+        uses: peaceiris/actions-gh-pages@v4
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
